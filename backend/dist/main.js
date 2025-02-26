@@ -27,7 +27,7 @@ async function bootstrap() {
         next();
     });
     const allowedOrigins = [
-        'https://puppy-spa.vercel.app',
+        'https://puppy-spa-beta.vercel.app',
         'http://localhost:3000',
         process.env.CORS_ORIGIN
     ].filter(Boolean);

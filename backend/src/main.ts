@@ -30,9 +30,9 @@ async function bootstrap() {
   });
 
   const allowedOrigins = [
-    'https://puppy-spa.vercel.app',    // Vercel frontend
-    'http://localhost:3000',           // Local frontend
-    process.env.CORS_ORIGIN           // From environment
+    'https://puppy-spa-beta.vercel.app',    // Vercel frontend
+    'http://localhost:3000',                // Local frontend
+    process.env.CORS_ORIGIN                // From environment
   ].filter(Boolean);
 
   app.enableCors({

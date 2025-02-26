@@ -188,48 +188,25 @@ MIT
 
 ## Vercel Deployment
 
-1. Push your code to GitHub
-
 2. Go to [Vercel](https://vercel.com) and:
    - Create new project
    - Import your GitHub repository
    - Select the frontend directory as root
    - Add environment variables:
      ```
-     NEXT_PUBLIC_API_URL=https://your-backend-url/api
+     NEXT_PUBLIC_API_URL=https://puppy-spa-api.onrender.com/api
      ```
-   - Deploy
+   - Deploy to: https://puppy-spa-beta.vercel.app
 
 3. After deployment:
-   - Add your Vercel domain to backend CORS settings
-   - Update frontend API URL if needed 
+   - Add your Vercel domain (https://puppy-spa-beta.vercel.app) to backend CORS settings
+   - Update frontend API URL if needed
 
 ## Deployment to Render
-
-1. Push your code to GitHub
-
-2. Create a new Web Service on Render:
-   - Connect your GitHub repository
-   - Select "Web Service"
-   - Use the following settings:
-     ```
-     Name: puppy-spa-api
-     Root Directory: backend
-     Environment: Node
-     Region: Frankfurt (or your preferred region)
-     Branch: main
-     Build Command: npm install && npm run build
-     Start Command: npm run start:prod
-     ```
 
 3. Add Environment Variables:
    ```
    NODE_ENV=production
    PORT=3001
-   CORS_ORIGIN=https://puppy-spa.vercel.app
-   ```
-
-4. Deploy and verify:
-   - Check the deployment logs
-   - Test the health endpoint: https://puppy-spa-api.onrender.com/api/health
-   - Verify CORS with your frontend 
+   CORS_ORIGIN=https://puppy-spa-beta.vercel.app
+   ``` 
