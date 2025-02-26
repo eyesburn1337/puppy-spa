@@ -15,8 +15,7 @@
     "db:update": "npx @mikro-orm/cli schema:update --run",
     "db:seed": "npx @mikro-orm/cli seeder:run",
     "db:reset": "npm run db:drop && npm run db:create && npm run migration:up",
-    "start:prod": "node dist/main",
-    "prestart:prod": "npx @mikro-orm/cli migration:up"
+    "start:prod": "node dist/start.prod.js"
   },
   "dependencies": {
     "@mikro-orm/core": "^5.9.7",
