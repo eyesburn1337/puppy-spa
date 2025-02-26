@@ -1,6 +1,6 @@
 # Puppy Spa Management System
 
-A full-stack application for managing a pet grooming business's daily appointments and records.
+A full-stack application for managing a puppy grooming spa, built with NestJS and Next.js.
 
 ## Features
 
@@ -30,157 +30,185 @@ A full-stack application for managing a pet grooming business's daily appointmen
 
 ## Project Structure
 
+### Backend (NestJS)
+
 ```
-puppy-spa/
-├── frontend/          # Next.js frontend application
-│   ├── src/
-│   │   ├── app/      # Next.js app router
-│   │   │   ├── components/
-│   │   │   │   ├── AddPuppyForm.tsx    # New appointment form
-│   │   │   │   ├── DashboardStats.tsx  # Statistics display
-│   │   │   │   ├── SearchHistory.tsx   # Historical search
-│   │   │   │   ├── Tabs.tsx           # Tab navigation
-│   │   │   │   └── WaitingListTable.tsx # Appointment list
-│   │   │   ├── constants/
-│   │   │   │   └── prices.ts          # Service pricing
-│   │   │   └── utils/
-│   │   │       └── time-slots.ts      # Time management
-└── backend/          # NestJS backend application
+backend/
+├── src/
+│   ├── core/
+│   │   ├── domain/
+│   │   │   ├── entities/
+│   │   │   │   ├── puppy.entity.ts
+│   │   │   │   └── waiting-list.entity.ts
+│   │   │   └── repositories/
+│   │   │       └── waiting-list.repository.ts
+│   │   └── services/
+│   │       └── waiting-list.service.ts
+│   ├── infrastructure/
+│   │   ├── config/
+│   │   │   └── database.config.ts
+│   │   └── persistence/
+│   │       └── mikro-orm/
+│   │           └── migrations/
+│   ├── interface/
+│   │   ├── controllers/
+│   │   │   └── waiting-list.controller.ts
+│   │   └── dtos/
+│   │       └── waiting-list.dto.ts
+│   ├── migrations/
+│   │   └── *.ts
+│   ├── app.module.ts
+│   ├── main.ts
+│   └── mikro-orm.config.ts
+├── test/
+├── .env
+├── .env.example
+├── package.json
+└── tsconfig.json
 ```
 
-## Service Types and Pricing
+#### Directory Structure Explanation
 
-- Grooming: $50
-- Bathing: $30
-- Nail Trimming: $20
+- **src/**: Main source code directory
+  - **core/**: Core business logic
+    - **domain/**: Domain entities and repositories
+    - **services/**: Business logic services
+  - **infrastructure/**: External concerns and configurations
+    - **config/**: Configuration files
+    - **persistence/**: Database-related code
+  - **interface/**: Application interface layer
+    - **controllers/**: API endpoints
+    - **dtos/**: Data Transfer Objects
+  - **migrations/**: Database migrations
 
-## Time Slots
+### Frontend (Next.js)
 
-- Operating hours: 9:00 AM to 5:00 PM
-- 30-minute intervals
-- Automatic availability checking
-- Cancelled slots become available for new bookings
+```
+frontend/
+├── src/
+│   ├── app/
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── AddPuppyForm.tsx
+│   │   ├── DashboardStats.tsx
+│   │   ├── HistoricalLists.tsx
+│   │   ├── SearchHistory.tsx
+│   │   ├── Tabs.tsx
+│   │   ├── WaitingList.tsx
+│   │   └── WaitingListTable.tsx
+│   ├── config/
+│   │   └── environment.ts
+│   ├── types/
+│   │   └── index.ts
+│   └── utils/
+│       ├── api-client.ts
+│       └── time-slots.ts
+├── public/
+├── .env.development
+├── .env.production
+└── package.json
+```
 
-## Installation
+## Environment Setup
 
-### Backend Setup
+### Backend
 
-1. Navigate to backend directory:
-```bash
-cd backend
+1. Create `.env` file:
+```env
+NODE_ENV=development
+PORT=3001
+DATABASE_URL=postgresql://username:password@localhost:5432/puppy_spa
+CORS_ORIGIN=http://localhost:3000
 ```
 
 2. Install dependencies:
 ```bash
+cd backend
 npm install
 ```
 
-3. Set up PostgreSQL database:
-```sql
-CREATE DATABASE puppy_spa;
-```
-
-4. Configure environment:
-```bash
-cp .env.example .env
-# Update database credentials in .env
-```
-
-5. Run migrations:
+3. Run migrations:
 ```bash
 npm run migration:up
 ```
 
-6. Start server:
-```bash
-npm run start:dev
+### Frontend
+
+1. Create environment files:
+
+`.env.development`:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001/api
 ```
 
-### Frontend Setup
-
-1. Navigate to frontend directory:
-```bash
-cd frontend
+`.env.production`:
+```env
+NEXT_PUBLIC_API_URL=https://puppy-spa-api.onrender.com/api
 ```
 
 2. Install dependencies:
 ```bash
+cd frontend
 npm install
 ```
 
-3. Start development server:
+## Development
+
+### Backend
 ```bash
+cd backend
+npm run start:dev
+```
+
+### Frontend
+```bash
+cd frontend
 npm run dev
 ```
 
+## Deployment
+
+The application is deployed using:
+- Frontend: Vercel
+- Backend: Render
+- Database: Render PostgreSQL
+
+### Environment Variables
+
+#### Backend (Render)
+- `NODE_ENV`: production
+- `PORT`: 3001
+- `CORS_ORIGIN`: https://puppy-spa-beta.vercel.app
+- `DATABASE_URL`: (from Render PostgreSQL)
+
+#### Frontend (Vercel)
+- `NEXT_PUBLIC_API_URL`: https://puppy-spa-api.onrender.com/api
+
 ## API Endpoints
 
-### Waiting List Management
-- `GET /api/waiting-list/by-date/:date`
-  - Get appointments for specific date
-  - Returns: `{ dayListId: string, entries: WaitingListEntry[] }`
+### Waiting List
+- `GET /api/waiting-list/by-date/:date` - Get appointments for a specific date
+- `POST /api/waiting-list/create` - Create new appointment
+- `PUT /api/waiting-list/by-date/:date/:id/update` - Update appointment
+- `PUT /api/waiting-list/by-date/:date/:id/service` - Toggle service status
+- `PUT /api/waiting-list/by-date/:date/:id/status` - Update appointment status
+- `PUT /api/waiting-list/by-date/:date/reorder` - Reorder appointments
+- `GET /api/waiting-list/search` - Search appointments
+- `GET /api/waiting-list/history` - Get historical appointments
 
-- `POST /api/waiting-list/create`
-  - Create new appointment
-  - Body: `{ petName, customerName, service, appointmentTime }`
+## Technologies
 
-- `PUT /api/waiting-list/by-date/:date/:id/update`
-  - Update appointment details
-  - Body: `{ petName?, customerName?, service?, status?, appointmentTime? }`
+- **Backend**:
+  - NestJS
+  - MikroORM
+  - PostgreSQL
+  - TypeScript
 
-- `PUT /api/waiting-list/by-date/:date/reorder`
-  - Reorder appointments
-  - Body: `{ entryId: string, newIndex: number }`
-
-### Historical Data
-- `GET /api/waiting-list/history`
-  - Get historical appointments
-  - Query: `startDate, endDate`
-
-- `GET /api/waiting-list/search`
-  - Search appointments
-  - Query: `query`
-
-## Frontend Components
-
-### AddPuppyForm
-- New appointment creation
-- Time slot selection
-- Service type selection
-- Validation and availability checking
-
-### WaitingListTable
-- Appointment list display
-- Drag and drop reordering
-- Status management
-- Appointment editing
-
-### SearchHistory
-- Historical appointment search
-- Filter by pet/owner name
-- Date range selection
-
-### DashboardStats
-- Daily statistics
-- Revenue calculation
-- Status breakdowns
-
-## Development
-
-### Running in Development Mode
-```bash
-# Root directory
-npm run dev # Starts both frontend and backend
-
-# Separately
-npm run dev:frontend
-npm run dev:backend
-```
-
-### Database Reset
-```bash
-npm run db:reset
-```
+- **Frontend**:
+  - Next.js 13 (App Router)
+  - TailwindCSS
+  - TypeScript
+  - React Beautiful DnD
 
 ## License
 
