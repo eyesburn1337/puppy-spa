@@ -9,7 +9,8 @@ export const apiClient = {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      credentials: 'include'
+      credentials: 'include',
+      mode: 'cors'
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

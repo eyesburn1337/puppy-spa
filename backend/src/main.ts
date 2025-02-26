@@ -30,16 +30,25 @@ async function bootstrap() {
   });
 
   const allowedOrigins = [
-    process.env.CORS_ORIGIN,
-    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null,
-    'http://localhost:3000'
-  ].filter(Boolean);
+    'https://puppy-spa.vercel.app',    // Add your Vercel domain
+    'http://localhost:3000',           // Local frontend
+    'http://localhost:3001'            // Local backend
+  ];
 
   app.enableCors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Accept']
+    allowedHeaders: ['Content-Type', 'Accept', 'Authorization']
   });
   
   app.setGlobalPrefix('api');
