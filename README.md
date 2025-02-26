@@ -185,3 +185,21 @@ npm run db:reset
 ## License
 
 MIT 
+
+## Vercel Deployment
+
+1. Push your code to GitHub
+
+2. Go to [Vercel](https://vercel.com) and:
+   - Create new project
+   - Import your GitHub repository
+   - Select the frontend directory as root
+   - Add environment variables:
+     ```
+     NEXT_PUBLIC_API_URL=https://your-backend-url/api
+     ```
+   - Deploy
+
+3. After deployment:
+   - Add your Vercel domain to backend CORS settings
+   - Update frontend API URL if needed 
