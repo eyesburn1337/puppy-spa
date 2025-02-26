@@ -1,8 +1,8 @@
 import { MikroORM } from '@mikro-orm/core';
-import { config } from './mikro-orm.config';
+import mikroOrmConfig from './mikro-orm.config';
 
 async function runMigrations() {
-  const orm = await MikroORM.init(config);
+  const orm = await MikroORM.init(mikroOrmConfig);
   
   try {
     const migrator = orm.getMigrator();

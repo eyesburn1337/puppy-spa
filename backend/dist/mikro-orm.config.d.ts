@@ -1,4 +1,3 @@
 import { Options } from '@mikro-orm/core';
-import { PostgreSqlDriver } from '@mikro-orm/postgresql';
-declare const config: Options<PostgreSqlDriver>;
+declare const config: Options;
 export default config;
