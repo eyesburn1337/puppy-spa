@@ -1,0 +1,24 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Head -->
+  <circle cx="50" cy="50" r="40" fill="#A78BFA"/>
+  
+  <!-- Ears -->
+  <path d="M25 35C25 35 20 25 30 20C40 15 45 30 45 30" fill="#7C3AED"/>
+  <path d="M75 35C75 35 80 25 70 20C60 15 55 30 55 30" fill="#7C3AED"/>
+  
+  <!-- Eyes -->
+  <circle cx="35" cy="45" r="5" fill="#1F2937"/>
+  <circle cx="65" cy="45" r="5" fill="#1F2937"/>
+  <circle cx="33" cy="43" r="2" fill="white"/>
+  <circle cx="63" cy="43" r="2" fill="white"/>
+  
+  <!-- Nose -->
+  <circle cx="50" cy="55" r="6" fill="#1F2937"/>
+  
+  <!-- Mouth -->
+  <path d="M40 65C40 65 45 70 50 70C55 70 60 65 60 65" stroke="#1F2937" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Spots -->
+  <circle cx="30" cy="60" r="8" fill="#7C3AED"/>
+  <circle cx="70" cy="60" r="8" fill="#7C3AED"/>
+</svg> 
