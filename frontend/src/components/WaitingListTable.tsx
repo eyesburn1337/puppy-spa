@@ -7,6 +7,7 @@ import { StrictModeDroppable } from './StrictModeDroppable';
 import { format, parseISO } from 'date-fns';
 import { generateTimeSlots, formatTimeSlot, isTimeSlotAvailable } from '@/utils/time-slots';
 import { ServiceStatus } from '@/types';
+import { config } from '@/config/environment';
 
 interface Props {
   entries: WaitingListEntry[];
@@ -65,7 +66,7 @@ export default function WaitingListTable({ entries, onUpdate, selectedDate }: Pr
       const [hours, minutes] = editing.time.split(':');
       appointmentDate.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0);
 
-      const response = await fetch(`http://localhost:3001/api/waiting-list/by-date/${selectedDate}/${id}/update`, {
+      const response = await fetch(`${config.apiUrl}/waiting-list/by-date/${selectedDate}/${id}/update`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +99,7 @@ export default function WaitingListTable({ entries, onUpdate, selectedDate }: Pr
     const { draggableId, destination } = result;
     
     try {
-      const response = await fetch(`http://localhost:3001/api/waiting-list/by-date/${selectedDate}/reorder`, {
+      const response = await fetch(`${config.apiUrl}/waiting-list/by-date/${selectedDate}/reorder`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -123,7 +124,7 @@ export default function WaitingListTable({ entries, onUpdate, selectedDate }: Pr
 
   const markAsServiced = async (id: string) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/waiting-list/by-date/${selectedDate}/${id}/service`, {
+      const response = await fetch(`${config.apiUrl}/waiting-list/by-date/${selectedDate}/${id}/service`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -144,7 +145,7 @@ export default function WaitingListTable({ entries, onUpdate, selectedDate }: Pr
 
   const updateStatus = async (id: string, newStatus: ServiceStatus) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/waiting-list/by-date/${selectedDate}/${id}/status`, {
+      const response = await fetch(`${config.apiUrl}/waiting-list/by-date/${selectedDate}/${id}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

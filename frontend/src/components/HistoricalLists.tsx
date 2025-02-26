@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
+import { config } from '@/config/environment';
 
 interface HistoryEntry {
   id: string;
@@ -35,7 +36,7 @@ export default function HistoricalLists() {
       startDate.setDate(startDate.getDate() - 30); // Last 30 days
 
       const response = await fetch(
-        `http://localhost:3001/api/waiting-list/history?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`,
+        `${config.apiUrl}/waiting-list/history?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`,
         {
           headers: { 
             'Accept': 'application/json',

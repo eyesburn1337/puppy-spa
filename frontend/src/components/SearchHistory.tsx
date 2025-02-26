@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { WaitingListEntry } from '@/types';
 import debounce from 'lodash/debounce';
 import { format } from 'date-fns';
+import { config } from '@/config/environment';
 
 interface SearchResult extends WaitingListEntry {
   visitDate: string;
@@ -24,7 +25,7 @@ export default function SearchHistory() {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:3001/api/waiting-list/search?query=${encodeURIComponent(searchQuery)}`,
+        `${config.apiUrl}/waiting-list/search?query=${encodeURIComponent(searchQuery)}`,
         {
           headers: { 
             'Accept': 'application/json',

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { format } from 'date-fns';
+import { config } from '@/config/environment';
 import WaitingListTable from '@/components/WaitingListTable';
 import AddPuppyForm from '@/components/AddPuppyForm';
 import { WaitingListEntry } from '@/types';
@@ -26,7 +27,7 @@ export default function Home() {
     setLoading(true);
     setError('');
     try {
-      const response = await fetch(`http://localhost:3001/api/waiting-list/by-date/${selectedDate}`, {
+      const response = await fetch(`${config.apiUrl}/waiting-list/by-date/${selectedDate}`, {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -54,7 +55,7 @@ export default function Home() {
 
   const handleAddPuppy = async (data: any) => {
     try {
-      const response = await fetch('http://localhost:3001/api/waiting-list/create', {
+      const response = await fetch(`${config.apiUrl}/waiting-list/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

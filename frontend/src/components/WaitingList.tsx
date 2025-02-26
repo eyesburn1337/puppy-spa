@@ -3,6 +3,7 @@
 import { format } from 'date-fns';
 import type { WaitingListEntry } from '@/types';
 import { apiClient } from '@/utils/api-client';
+import { config } from '@/config/environment';
 
 interface Props {
   waitingList: WaitingListEntry[];
@@ -20,15 +21,12 @@ export default function WaitingList({ waitingList, selectedDate, onUpdate }: Pro
       const rawDate = new Date(selectedDate);
       const formattedDate = format(rawDate, 'yyyy-MM-dd');
       
-      // Construct the URL carefully
-      const baseUrl = 'http://localhost:3001';
-      const apiPrefix = '/api';
+      // Use config.apiUrl instead of hardcoded URL
       const path = `/waiting-list/by-date/${formattedDate}/${id}/service`;
-      const fullUrl = `${baseUrl}${apiPrefix}${path}`;
+      const fullUrl = `${config.apiUrl}${path}`;
       
       console.log('Request URL:', {
-        baseUrl,
-        apiPrefix,
+        apiUrl: config.apiUrl,
         path,
         fullUrl
       });
