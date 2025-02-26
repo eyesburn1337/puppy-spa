@@ -17,7 +17,9 @@
     "db:reset": "npm run db:drop && npm run db:create && npm run migration:up",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage"
+    "test:cov": "jest --coverage",
+    "start:prod": "node dist/main",
+    "prestart:prod": "npm run migration:up"
   },
   "dependencies": {
     "@mikro-orm/core": "^5.x.x",
