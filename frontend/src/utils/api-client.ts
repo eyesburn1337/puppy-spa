@@ -1,10 +1,13 @@
 import { config } from '@/config/environment';
 
 const API_BASE_URL = config.apiUrl;
+console.log('API Base URL:', API_BASE_URL);
 
 export const apiClient = {
   async get(endpoint: string) {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    const url = `${API_BASE_URL}${endpoint}`;
+    console.log('Making GET request to:', url);
+    const response = await fetch(url, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
