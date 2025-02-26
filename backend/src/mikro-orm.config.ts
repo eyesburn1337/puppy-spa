@@ -1,6 +1,6 @@
 import { Options } from '@mikro-orm/core';
-import { Puppy } from './interface/entities/puppy.entity';
-import { WaitingList } from './interface/entities/waiting-list.entity';
+import { Puppy } from './core/domain/entities/puppy.entity';
+import { WaitingList } from './core/domain/entities/waiting-list.entity';
 
 const config: Options = {
   entities: [Puppy, WaitingList],
