@@ -70,11 +70,7 @@ let PuppyController = PuppyController_1 = class PuppyController {
                 waitingList
             });
             await this.em.persistAndFlush(puppy);
-            return {
-                ...puppy,
-                appointmentTime: puppy.appointmentTime.toISOString(),
-                createdAt: puppy.createdAt.toISOString()
-            };
+            return Object.assign(Object.assign({}, puppy), { appointmentTime: puppy.appointmentTime.toISOString(), createdAt: puppy.createdAt.toISOString() });
         }
         catch (error) {
             this.logger.error('Failed to create puppy:', error);
